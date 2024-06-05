@@ -21,5 +21,4 @@ public class AccountController {
         accountService.createuser(data);
         return ResponseEntity.ok().build();
     }
-
 }
