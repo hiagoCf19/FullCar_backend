@@ -22,5 +22,8 @@ public class AccountService {
         accountRepository.save(createdAccount);
         return createdAccount;
     }
+    public Account getAccountById(Long id){
+        return accountRepository.findById(id).orElseThrow(()-> new RuntimeException("Usuário não existe") );
+    }
 
 }
