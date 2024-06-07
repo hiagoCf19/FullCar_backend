@@ -1,4 +1,4 @@
-package com.fullCar.FullCar.configuration;
+package com.fullCar.FullCar.configuration.security;
 
 import com.fullCar.FullCar.service.AuthService;
 import com.fullCar.FullCar.service.TokenService;
