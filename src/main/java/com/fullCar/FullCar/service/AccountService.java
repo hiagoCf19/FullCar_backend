@@ -1,6 +1,7 @@
 package com.fullCar.FullCar.service;
 
 import com.fullCar.FullCar.dto.RegisterAccountDTO;
+import com.fullCar.FullCar.exception.AccountNotFound;
 import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.repository.AccountRepository;
 import com.fullCar.FullCar.util.PasswordUtil;
@@ -22,8 +23,8 @@ public class AccountService {
         accountRepository.save(createdAccount);
         return createdAccount;
     }
-    public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(()-> new RuntimeException("Usuário não existe") );
+    public Account verifyAccountExist(Long id){
+        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("É necessário ter uma conta para anunciar!") );
     }
 
 }

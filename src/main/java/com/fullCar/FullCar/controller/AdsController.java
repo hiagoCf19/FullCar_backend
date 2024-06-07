@@ -1,7 +1,8 @@
 package com.fullCar.FullCar.controller;
 
-import com.fullCar.FullCar.dto.AdsIdDTO;
-import com.fullCar.FullCar.dto.AdsRequestDTO;
+import com.fullCar.FullCar.dto.AdIdDTO;
+import com.fullCar.FullCar.dto.AdRequestDTO;
+import com.fullCar.FullCar.dto.AdsResponseListDTO;
 import com.fullCar.FullCar.service.AdsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +18,20 @@ public class AdsController {
     private  final AdsService adsService;
     @PostMapping("/create")
     @Transactional
-    public ResponseEntity<AdsIdDTO> registerAds(@RequestBody AdsRequestDTO data, UriComponentsBuilder uriComponentsBuilder){
-        AdsIdDTO ads= adsService.createAds(data);
-        var uri= uriComponentsBuilder.path("/ads/{id}").buildAndExpand(ads.id()).toUri();
-        return ResponseEntity.created(uri).body(ads);
+    public ResponseEntity<AdIdDTO> registerAd(@RequestBody AdRequestDTO data, UriComponentsBuilder uriComponentsBuilder){
+        AdIdDTO ad= adsService.createAd(data);
+        var uri= uriComponentsBuilder.path("/ads/{id}").buildAndExpand(ad.id()).toUri();
+        return ResponseEntity.created(uri).body(ad);
+    }
+    @GetMapping
+    public ResponseEntity<AdsResponseListDTO> getAllAds(){
+       var ads= adsService.getAllAds();
+       return ResponseEntity.ok().body(ads);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<AdsRequestDTO> getAds(@PathVariable Long id){
-        var ads= adsService.getAds(id);
-        return ResponseEntity.ok().body(ads);
+    public ResponseEntity<AdRequestDTO> getAd(@PathVariable Long id){
+        var ad= adsService.getAd(id);
+        return ResponseEntity.ok().body(ad);
     }
 }
 

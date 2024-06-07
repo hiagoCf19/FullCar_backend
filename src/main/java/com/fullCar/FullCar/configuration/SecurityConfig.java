@@ -14,8 +14,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/user/create", "/ads/*").permitAll();
-                    req.requestMatchers("/user/create", "/ads/*").permitAll();
                     req.anyRequest().permitAll();
                 }).build();
     }

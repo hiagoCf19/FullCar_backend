@@ -5,7 +5,7 @@ import com.fullCar.FullCar.model.Ads;
 import java.time.LocalDateTime;
 
 
-public record AdsRequestDTO(
+public record AdRequestDTO(
          Long id,
          String title,
          String description,
@@ -20,7 +20,7 @@ public record AdsRequestDTO(
          String reference_month,
          LocalDateTime created_at
 ) {
-    public AdsRequestDTO(Ads ads) {
+    public AdRequestDTO(Ads ads) {
         this(
                 ads.getId(),
                 ads.getTitle(),
