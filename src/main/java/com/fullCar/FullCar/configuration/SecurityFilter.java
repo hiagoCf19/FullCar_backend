@@ -21,14 +21,19 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final AuthService authService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var JWT= tokenService.getToken(request);
-        if(JWT != null){
-            var userDetails= tokenService.recoverContentToken(JWT);
-            var account= authService.getUserByLogin(userDetails);
-            var authentication = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        filterChain.doFilter(request, response);
+       try{
+           var JWT= tokenService.getToken(request);
+           if(JWT != null){
+               var userDetails= tokenService.recoverContentToken(JWT);
+               var account= authService.getUserByLogin(userDetails);
+               var authentication = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+               SecurityContextHolder.getContext().setAuthentication(authentication);
+           }
+           filterChain.doFilter(request, response);
+       } catch (Exception ex){
+           response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+           response.setCharacterEncoding("UTF-8");
+           response.getWriter().println(ex.getLocalizedMessage());
+       }
     }
-
 }
