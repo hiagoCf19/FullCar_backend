@@ -14,17 +14,18 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public Account createuser(RegisterAccountDTO data){
-        Account createdAccount = new Account( );
+        Account createdAccount = new Account();
         String password= PasswordUtil.encoder(data.password_hash());
-        createdAccount.setUsername(data.username());
         createdAccount.setEmail(data.email());
+        createdAccount.setUser_name(data.user_name());
         createdAccount.setPassword_hash(password);
         createdAccount.setCreated_at(data.created_at());
         accountRepository.save(createdAccount);
         return createdAccount;
     }
     public Account verifyAccountExist(Long id){
-        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("É necessário ter uma conta para anunciar!") );
+        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("You need an account to ad!") );
     }
+
 
 }

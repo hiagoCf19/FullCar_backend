@@ -1,7 +1,7 @@
 package com.fullCar.FullCar.controller;
-
 import com.fullCar.FullCar.dto.RegisterAccountDTO;
 import com.fullCar.FullCar.service.AccountService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
