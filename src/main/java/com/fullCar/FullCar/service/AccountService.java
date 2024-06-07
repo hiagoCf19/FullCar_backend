@@ -5,15 +5,16 @@ import com.fullCar.FullCar.exception.AccountNotFound;
 import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.repository.AccountRepository;
 import com.fullCar.FullCar.util.PasswordUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
 
-    public Account createuser(RegisterAccountDTO data){
+    private final AccountRepository accountRepository;
+
+    public Account createUser(RegisterAccountDTO data){
         Account createdAccount = new Account();
         String password= PasswordUtil.encoder(data.password_hash());
         createdAccount.setEmail(data.email());
@@ -26,6 +27,4 @@ public class AccountService {
     public Account verifyAccountExist(Long id){
         return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("You need an account to ad!") );
     }
-
-
 }

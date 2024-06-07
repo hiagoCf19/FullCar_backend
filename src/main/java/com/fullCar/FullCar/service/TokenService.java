@@ -3,11 +3,12 @@ package com.fullCar.FullCar.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.fullCar.FullCar.exception.AuthenticationException;
+import com.fullCar.FullCar.exception.GenerateTokenException;
 import com.fullCar.FullCar.model.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -26,7 +27,7 @@ public class TokenService {
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception ) {
-        throw new RuntimeException("Unable to generate token: " + exception);
+        throw new GenerateTokenException("Unable to generate token: " + exception);
         }
     }
     public String getToken(HttpServletRequest request){
@@ -45,7 +46,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         }catch (JWTVerificationException exception){
-            throw new RuntimeException("invalid or expired token!");
+            throw new AuthenticationException("invalid or expired token!");
         }
     }
     private Instant generateExpirationDate(){

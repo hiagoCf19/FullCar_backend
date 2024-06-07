@@ -5,7 +5,6 @@ import com.fullCar.FullCar.dto.AuthenticationRequestDTO;
 import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.service.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +22,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody AuthenticationRequestDTO authData){
+    public ResponseEntity<AccountTokenDTO> login(@RequestBody AuthenticationRequestDTO authData){
         var usernamePasswordAuthenticationToken= new UsernamePasswordAuthenticationToken(authData.email(), authData.password());
         var auth= manager.authenticate(usernamePasswordAuthenticationToken);
         var tokenJWT= tokenService.generateToken((Account) auth.getPrincipal());
