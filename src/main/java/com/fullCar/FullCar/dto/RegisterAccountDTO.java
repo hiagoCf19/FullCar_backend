@@ -1,9 +1,19 @@
 package com.fullCar.FullCar.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
-public record RegisterAccountDTO(Long id,
-                                 String email,
-                                 String user_name,
-                                 String password_hash,
-                                 LocalDateTime created_at){}
+public record RegisterAccountDTO(
+        @NotNull
+        Long id,
+        @Email
+        String email,
+        @NotNull
+        @NotBlank
+        String user_name,
+        @NotNull
+        String password_hash,
+        LocalDateTime created_at){}

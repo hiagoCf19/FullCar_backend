@@ -1,4 +1,11 @@
 package com.fullCar.FullCar.dto;
 
-public record AuthenticationRequestDTO(String email, String password) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
+public record AuthenticationRequestDTO(
+        @Email
+        String email,
+        @NotNull
+        String password) {
 }
