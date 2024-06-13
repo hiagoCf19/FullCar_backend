@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public record RegisterAccountDTO(
-        @NotNull
+public record AccountRequestDTO(
+
         Long id,
         @Email
         String email,

@@ -1,6 +1,6 @@
 package com.fullCar.FullCar.service;
 
-import com.fullCar.FullCar.dto.RegisterAccountDTO;
+import com.fullCar.FullCar.dto.AccountRequestDTO;
 import com.fullCar.FullCar.exception.AccountNotFound;
 import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.repository.AccountRepository;
@@ -14,7 +14,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    public Account createUser(RegisterAccountDTO data){
+    public Account createUser(AccountRequestDTO data){
         Account createdAccount = new Account();
         String password= PasswordUtil.encoder(data.password_hash());
         createdAccount.setEmail(data.email());

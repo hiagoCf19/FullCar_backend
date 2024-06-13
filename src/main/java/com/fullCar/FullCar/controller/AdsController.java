@@ -33,5 +33,7 @@ public class AdsController {
         var ad= adsService.getAd(id);
         return ResponseEntity.ok().body(ad);
     }
+
+
 }
 
