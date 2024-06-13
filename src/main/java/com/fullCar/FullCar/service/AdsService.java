@@ -2,6 +2,7 @@ package com.fullCar.FullCar.service;
 
 import com.fullCar.FullCar.dto.AdIdDTO;
 import com.fullCar.FullCar.dto.AdRequestDTO;
+import com.fullCar.FullCar.dto.AdResponseDTO;
 import com.fullCar.FullCar.dto.AdsResponseListDTO;
 import com.fullCar.FullCar.exception.AdsNotFound;
 import com.fullCar.FullCar.model.Ads;
@@ -9,6 +10,7 @@ import com.fullCar.FullCar.repository.AdsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,17 +32,18 @@ public class AdsService {
        ad.setModel_year(data.model_year());
        ad.setFipe_price(data.fipe_price());
        ad.setReference_month(data.reference_month());
+       ad.setCreated_at(LocalDateTime.now());
        adsRepository.save(ad);
        return new AdIdDTO(ad.getId());
     }
 
-    public AdRequestDTO getAd(Long id){
-        var ad= adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("O anúncio que você procura não existe!"));
-        return new AdRequestDTO(ad);
+    public AdResponseDTO getAd(Long id){
+        var ad= adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("The ad you are looking for was not found"));
+        return new AdResponseDTO(ad);
     }
     public AdsResponseListDTO getAllAds(){
         List<Ads> allAds= adsRepository.findAll();
-        var list= allAds.stream().map(AdRequestDTO::new).toList();
+        var list= allAds.stream().map(AdResponseDTO::new).toList();
         return new AdsResponseListDTO(list);
     }
 }

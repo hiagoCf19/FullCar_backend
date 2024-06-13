@@ -1,24 +1,41 @@
 package com.fullCar.FullCar.dto;
 
 import com.fullCar.FullCar.model.Ads;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 
 public record AdRequestDTO(
          Long id,
+         @NotNull
+         @NotBlank
          String title,
+         @NotNull
+         @NotBlank
          String description,
+         @NotNull
          Long user_id,
+         @NotNull
          Double user_price,
+         @NotNull
+         @NotBlank
          String brand,
+         @NotNull
          String code_fipe,
+         @NotNull
+         @NotBlank
          String fuel,
+         @NotNull
          String model,
+         @NotNull
          Integer model_year,
+         @NotNull
          Double fipe_price,
-         String reference_month,
-         LocalDateTime created_at
+         @NotNull
+         String reference_month
+
 ) {
     public AdRequestDTO(Ads ads) {
         this(
@@ -33,8 +50,8 @@ public record AdRequestDTO(
                 ads.getModel(),
                 ads.getModel_year(),
                 ads.getFipe_price(),
-                ads.getReference_month(),
-                ads.getCreated_at()
+                ads.getReference_month()
+
         );
     }
 }
