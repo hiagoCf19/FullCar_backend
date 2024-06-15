@@ -23,7 +23,7 @@ public class AdsService {
        var ad= new Ads();
        ad.setTitle(data.title());
        ad.setDescription(data.description());
-       ad.setUser_id(accountService.verifyAccountExist(data.user_id()));
+       ad.setUser_id(accountService.getAccountById(data.user_id()));
        ad.setUser_price(data.user_price());
        ad.setBrand(data.brand());
        ad.setCode_fipe(data.code_fipe());

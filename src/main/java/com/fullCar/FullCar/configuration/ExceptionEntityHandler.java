@@ -2,6 +2,7 @@ package com.fullCar.FullCar.configuration;
 
 import com.fullCar.FullCar.dto.BeanValidationErrorDTO;
 import com.fullCar.FullCar.dto.ErrorDTO;
+import com.fullCar.FullCar.exception.AccountAlreadyExistException;
 import com.fullCar.FullCar.exception.AccountNotFound;
 import com.fullCar.FullCar.exception.AdsNotFound;
 import com.fullCar.FullCar.exception.AuthenticationException;
@@ -32,6 +33,10 @@ public class ExceptionEntityHandler {
         var errors= exception.getFieldErrors();
         return ResponseEntity.badRequest().body(errors.stream().map(BeanValidationErrorDTO::new));
     }
+    @ExceptionHandler(AccountAlreadyExistException.class)
+    public ResponseEntity<ErrorDTO> handleAccountAlreadyExist (AccountAlreadyExistException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDTO(e.getMessage()));
+}
 
 
 }

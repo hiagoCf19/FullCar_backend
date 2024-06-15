@@ -20,7 +20,7 @@ public class AccountController {
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<AccountIdDTO> createAccount(@RequestBody @Valid AccountRequestDTO data, UriComponentsBuilder uriComponentsBuilder){
-        var account= accountService.createUser(data);
+        var account= accountService.createAccount(data);
         var uri= uriComponentsBuilder.path("/account/{id}").buildAndExpand(account.getId()).toUri();
         return ResponseEntity.created(uri).body(new AccountIdDTO(account.getId()));
     }
