@@ -15,5 +15,5 @@ public record AccountRequestDTO(
         @NotBlank
         String user_name,
         @NotNull
-        String password_hash,
+        String password,
         LocalDateTime created_at){}

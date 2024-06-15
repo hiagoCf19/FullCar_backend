@@ -26,7 +26,7 @@ public class Account implements UserDetails {
     private Long id;
     private String email;
     private String user_name;
-    private String password_hash;
+    private String password;
     private LocalDateTime created_at;
 
     @Override
@@ -37,7 +37,7 @@ public class Account implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password_hash;
+        return password;
     }
 
     @Override

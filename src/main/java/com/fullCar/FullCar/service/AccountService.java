@@ -19,10 +19,10 @@ public class AccountService {
 
     public Account createUser(AccountRequestDTO data){
         Account createdAccount = new Account();
-        String password= PasswordUtil.encoder(data.password_hash());
+        String password= PasswordUtil.encoder(data.password());
         createdAccount.setEmail(data.email());
         createdAccount.setUser_name(data.user_name());
-        createdAccount.setPassword_hash(password);
+        createdAccount.setPassword(password);
         createdAccount.setCreated_at(LocalDateTime.now());
         accountRepository.save(createdAccount);
         return createdAccount;
