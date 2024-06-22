@@ -33,10 +33,14 @@ public class AccountService {
         return createdAccount;
     }
     public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("You need an account to ad!") );
+        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("Account not found") );
     }
     public AccountResponseDTO getAccount(Long id){
         var account= getAccountById(id);
+        return new AccountResponseDTO(account);
+    }
+    public AccountResponseDTO getAccountByEmail(String email){
+        var account= accountRepository.getAccountByEmail(email).orElseThrow(()-> new AccountNotFound("account not found"));
         return new AccountResponseDTO(account);
     }
 }

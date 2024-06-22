@@ -24,6 +24,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("Full car")
                     .withSubject(account.getEmail())
+                    .withClaim("id", account.getId())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception ) {
@@ -52,4 +53,5 @@ public class TokenService {
     private Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(6).toInstant(ZoneOffset.of("-03:00"));
     }
+
 }
