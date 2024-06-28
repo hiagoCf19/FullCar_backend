@@ -1,6 +1,7 @@
 package com.fullCar.FullCar.controller;
 import com.fullCar.FullCar.dto.AccountIdDTO;
 import com.fullCar.FullCar.dto.AccountRequestDTO;
+import com.fullCar.FullCar.dto.AccountUpdateRequestDTO;
 import com.fullCar.FullCar.dto.AccountResponseDTO;
 import com.fullCar.FullCar.service.AccountService;
 
@@ -28,5 +29,11 @@ public class AccountController {
     public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long id){
         var account= accountService.getAccount(id);
         return ResponseEntity.ok().body(account);
+    }
+    @PutMapping("/update")
+    @Transactional
+    public ResponseEntity editData(@Valid @RequestBody AccountUpdateRequestDTO data){
+        accountService.updateAccountData(data);
+        return ResponseEntity.noContent().build();
     }
 }

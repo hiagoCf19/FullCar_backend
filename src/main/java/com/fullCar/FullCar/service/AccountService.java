@@ -1,6 +1,7 @@
 package com.fullCar.FullCar.service;
 
 import com.fullCar.FullCar.dto.AccountRequestDTO;
+import com.fullCar.FullCar.dto.AccountUpdateRequestDTO;
 import com.fullCar.FullCar.dto.AccountResponseDTO;
 import com.fullCar.FullCar.exception.AccountAlreadyExistException;
 import com.fullCar.FullCar.exception.AccountNotFound;
@@ -43,4 +44,14 @@ public class AccountService {
         var account= accountRepository.getAccountByEmail(email).orElseThrow(()-> new AccountNotFound("account not found"));
         return new AccountResponseDTO(account);
     }
+    public void updateAccountData(AccountUpdateRequestDTO data){
+        var account= getAccountById(data.id());
+        if(data.email() != null){
+            account.setEmail(data.email());
+        }
+        if(data.user_name() != null){
+            account.setUser_name(data.user_name());
+        }
+    }
+
 }
