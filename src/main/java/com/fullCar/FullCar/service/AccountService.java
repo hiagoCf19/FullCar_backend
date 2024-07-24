@@ -37,6 +37,7 @@ public class AccountService {
         createdAccount.setUser_name(data.user_name());
         createdAccount.setPassword(password);
         createdAccount.setCreated_at(LocalDateTime.now());
+        createdAccount.setIs_confirmed(false);
         accountRepository.save(createdAccount);
         triggerConfirmationEmail(data.email(), createdAccount);
         return createdAccount;

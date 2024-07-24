@@ -28,6 +28,7 @@ public class Account implements UserDetails {
     private String user_name;
     private String password;
     private LocalDateTime created_at;
+    private Boolean is_confirmed;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
