@@ -52,6 +52,10 @@ public class AccountService {
         if(data.user_name() != null){
             account.setUser_name(data.user_name());
         }
+
+    }
+    public void triggerConfirmationAccount(){
+
     }
 
 }

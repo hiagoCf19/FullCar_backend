@@ -25,7 +25,6 @@ public class TokenService {
                     .withIssuer("Full car")
                     .withSubject(account.getEmail())
                     .withClaim("id", account.getId())
-                    .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception ) {
         throw new GenerateTokenException("Unable to generate token: " + exception);
@@ -49,9 +48,6 @@ public class TokenService {
         }catch (JWTVerificationException exception){
             throw new AuthenticationException("invalid or expired token!");
         }
-    }
-    private Instant generateExpirationDate(){
-        return LocalDateTime.now().plusHours(6).toInstant(ZoneOffset.of("-03:00"));
     }
 
 }
