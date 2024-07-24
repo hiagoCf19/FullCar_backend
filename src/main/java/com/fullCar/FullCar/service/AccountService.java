@@ -9,6 +9,9 @@ import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.repository.AccountRepository;
 import com.fullCar.FullCar.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +21,10 @@ import java.time.LocalDateTime;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    private String sender;
+
 
     public Account createAccount(AccountRequestDTO data){
         var verifyAccountAlreadyExist= accountRepository.getAccountByEmail(data.email());
@@ -31,6 +38,7 @@ public class AccountService {
         createdAccount.setPassword(password);
         createdAccount.setCreated_at(LocalDateTime.now());
         accountRepository.save(createdAccount);
+        triggerConfirmationEmail(data.email(), createdAccount);
         return createdAccount;
     }
     public Account getAccountById(Long id){
@@ -54,8 +62,41 @@ public class AccountService {
         }
 
     }
-    public void triggerConfirmationAccount(){
-
+    private void triggerConfirmationEmail(String AccountEmail, Account account){
+          try{
+              SimpleMailMessage mail= new SimpleMailMessage();
+              mail.setFrom(sender);
+              mail.setTo(AccountEmail);
+              mail.setSubject("Confirmaçao de conta");
+              mail.setText(template(account));
+              javaMailSender.send(mail);
+          }catch (Exception e){
+              System.out.println("erro ao enviar o email: " + e.getLocalizedMessage());
+          }
     }
+    private String template(Account account){
+        String baseUrl = "http://localhost:8080/account/";
+        String endpoint = "/confirm";
+        String url= baseUrl+ account.getId() + endpoint;
+        return String.format("""
+                 
+                 Olá %s,
+                 
+                 Bem-vindo à FullCar!
+                 
+                 Para concluir a criação da sua conta, por favor, confirme seu endereço de e-mail clicando no link abaixo:
+                 
+                 %s
+                 
+                 Se você não criou uma conta na FullCar, ignore este e-mail.
+                 
+                 Agradecemos por escolher a FullCar!
+                 
+                 Atenciosamente,
+                 Equipe Fullcar
+         
+                """, account.getUser_name(), url);
+    }
+
 
 }
