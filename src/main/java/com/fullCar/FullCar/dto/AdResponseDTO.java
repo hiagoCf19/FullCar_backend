@@ -1,9 +1,8 @@
 package com.fullCar.FullCar.dto;
 
 import com.fullCar.FullCar.model.Ads;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record AdResponseDTO(
@@ -22,7 +21,20 @@ public record AdResponseDTO(
         Integer model_year,
         Double fipe_price,
         String reference_month,
-        LocalDateTime created_at
+        LocalDateTime created_at,
+        BigDecimal kilometers_driven,
+
+        String type_of_vehicle,
+
+        String traffic_signs,
+
+        String car_color,
+
+        String type_of_direction,
+
+        String gear_box,
+
+        BigDecimal engine_power
 ) {
     public AdResponseDTO(Ads ads) {
         this(
@@ -37,7 +49,14 @@ public record AdResponseDTO(
                 ads.getModel_year(),
                 ads.getFipe_price(),
                 ads.getReference_month(),
-                ads.getCreated_at()
+                ads.getCreated_at(),
+                ads.getKilometers_driven(),
+                ads.getType_of_vehicle(),
+                ads.getTraffic_signs(),
+                ads.getCar_color(),
+                ads.getType_of_direction(),
+                ads.getGear_box(),
+                ads.getEngine_power()
         );
     }
 }

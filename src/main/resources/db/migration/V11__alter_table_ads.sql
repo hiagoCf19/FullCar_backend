@@ -1,0 +1,1 @@
+ALTER TABLE ads ADD COLUMN  kilometers_driven NUMERIC(10,3) NOT NULL;

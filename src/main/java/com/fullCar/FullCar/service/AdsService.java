@@ -33,6 +33,13 @@ public class AdsService {
        ad.setFipe_price(data.fipe_price());
        ad.setReference_month(data.reference_month());
        ad.setCreated_at(LocalDateTime.now());
+       ad.setKilometers_driven(data.kilometers_driven());
+       ad.setType_of_vehicle(data.type_of_vehicle());
+       ad.setTraffic_signs(data.traffic_signs());
+       ad.setCar_color(data.car_color());
+       ad.setType_of_direction(data.type_of_direction());
+       ad.setGear_box(data.gear_box());
+       ad.setEngine_power(data.engine_power());
        adsRepository.save(ad);
        return new AdIdDTO(ad.getId());
     }
