@@ -42,13 +42,7 @@ public class AccountService {
         triggerConfirmationEmail(data.email(), createdAccount);
         return createdAccount;
     }
-    public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("Account not found") );
-    }
-    public AccountResponseDTO getAccount(Long id){
-        var account= getAccountById(id);
-        return new AccountResponseDTO(account);
-    }
+
     public AccountResponseDTO getAccountByEmail(String email){
         var account= accountRepository.getAccountByEmail(email).orElseThrow(()-> new AccountNotFound("account not found"));
         return new AccountResponseDTO(account);
@@ -62,6 +56,14 @@ public class AccountService {
             account.setUser_name(data.user_name());
         }
 
+    }
+    public void confirmationAccount(Long id ){
+        Account account= getAccountById(id);
+        account.setIs_confirmed(true);
+    }
+
+    public Account getAccountById(Long id){
+        return accountRepository.findById(id).orElseThrow(()-> new AccountNotFound("Account not found") );
     }
     private void triggerConfirmationEmail(String AccountEmail, Account account){
           try{

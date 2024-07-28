@@ -27,13 +27,19 @@ public class AccountController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable Long id){
-        var account= accountService.getAccount(id);
-        return ResponseEntity.ok().body(account);
+        var account= accountService.getAccountById(id);
+        return ResponseEntity.ok().body(new AccountResponseDTO(account));
     }
     @PutMapping("/update")
     @Transactional
-    public ResponseEntity editData(@Valid @RequestBody AccountUpdateRequestDTO data){
+    public ResponseEntity<Void> editData(@Valid @RequestBody AccountUpdateRequestDTO data){
         accountService.updateAccountData(data);
+        return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}/confirm")
+    @Transactional
+    public ResponseEntity<Void> triggerConfirmation(@PathVariable Long id){
+        accountService.confirmationAccount(id);
         return ResponseEntity.noContent().build();
     }
 }
