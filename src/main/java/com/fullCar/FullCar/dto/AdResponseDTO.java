@@ -4,17 +4,15 @@ import com.fullCar.FullCar.model.Ads;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record AdResponseDTO(
         Long id,
         String title,
-
         String description,
-
+        List<ImageResponseDTO> images,
         Double user_price,
-
         String brand,
-
         String code_fipe,
         String fuel,
         String model,
@@ -23,24 +21,19 @@ public record AdResponseDTO(
         String reference_month,
         LocalDateTime created_at,
         BigDecimal kilometers_driven,
-
         String type_of_vehicle,
-
         String traffic_signs,
-
         String car_color,
-
         String type_of_direction,
-
         String gear_box,
-
         BigDecimal engine_power
 ) {
-    public AdResponseDTO(Ads ads) {
+    public AdResponseDTO(Ads ads, List<ImageResponseDTO> images) {
         this(
                 ads.getId(),
                 ads.getTitle(),
                 ads.getDescription(),
+                images,
                 ads.getUser_price(),
                 ads.getBrand(),
                 ads.getCode_fipe(),

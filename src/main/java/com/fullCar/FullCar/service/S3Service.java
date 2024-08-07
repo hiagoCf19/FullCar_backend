@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 
 @Service
@@ -27,10 +28,16 @@ public class S3Service {
         public S3Service(S3Client s3Client, @Value("${aws.s3.bucketName}") String bucketName) {
                 this.s3Client = s3Client;
                 this.bucketName = bucketName;
+
         }
 
         // Method
-        public String uploadFile(String key, MultipartFile file) {
+        public String sendToBucket(String key, MultipartFile file) {
+//                 validate image type
+                if (!isValidImage(file)) {
+                        throw new IllegalArgumentException("Invalid file type. Only JPEG, JPG, and PNG images are allowed.");
+                }
+
                 try (InputStream is = file.getInputStream()) {
                         // Create RequestBody from InputStream
                         RequestBody requestBody = RequestBody.fromInputStream(is, file.getSize());
@@ -62,5 +69,14 @@ public class S3Service {
                         logger.error("Failed to generate URL for file. Key: {}", key, e);
                         throw new RuntimeException("Failed to generate file URL.", e);
                 }
+        }
+
+        private boolean isValidImage(MultipartFile file) {
+                // Tipos MIME permitidos
+                String[] allowedMimeTypes = {"image/jpeg", "image/jpg", "image/png"};
+
+                // Verificar se o tipo MIME do arquivo está na lista de tipos permitidos
+                String mimeType = file.getContentType();
+                return mimeType != null && Arrays.asList(allowedMimeTypes).contains(mimeType);
         }
 }

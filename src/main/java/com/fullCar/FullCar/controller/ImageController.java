@@ -1,6 +1,9 @@
 package com.fullCar.FullCar.controller;
 
-import com.fullCar.FullCar.service.FileUploadService;
+import com.fullCar.FullCar.dto.AdIdDTO;
+import com.fullCar.FullCar.dto.ImageResponseDTO;
+import com.fullCar.FullCar.model.Ads;
+import com.fullCar.FullCar.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/integration/aws-s3")
-public class FileUploadController {
+public class ImageController {
+
     @Autowired
-    private FileUploadService fileUploadService;
+    private ImageService imageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file){
-        String eTag= fileUploadService.uploadFile(file);
-        return ResponseEntity.ok("File uploaded successfully. ETag: " + eTag);
+    public ResponseEntity<ImageResponseDTO> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Long ad_id) {
+        var eTag = imageService.uploadFile(file, ad_id);
+        return ResponseEntity.ok(eTag);
     }
 }

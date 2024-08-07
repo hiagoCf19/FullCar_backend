@@ -3,7 +3,6 @@ package com.fullCar.FullCar.controller;
 import com.fullCar.FullCar.dto.AdIdDTO;
 import com.fullCar.FullCar.dto.AdRequestDTO;
 import com.fullCar.FullCar.dto.AdResponseDTO;
-import com.fullCar.FullCar.dto.AdsResponseListDTO;
 import com.fullCar.FullCar.service.AdsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +24,11 @@ public class AdsController {
         var uri= uriComponentsBuilder.path("/ads/{id}").buildAndExpand(ad.id()).toUri();
         return ResponseEntity.created(uri).body(ad);
     }
-    @GetMapping
-    public ResponseEntity<AdsResponseListDTO> getAllAds(){
-       var ads= adsService.getAllAds();
-       return ResponseEntity.ok().body(ads);
-    }
+//    @GetMapping
+//    public ResponseEntity<AdsResponseListDTO> getAllAds(){
+//       var ads= adsService.getAllAds();
+//       return ResponseEntity.ok().body(ads);
+//    }
     @GetMapping("/{id}")
     public ResponseEntity<AdResponseDTO> getAd(@PathVariable Long id){
         var ad= adsService.getAd(id);
