@@ -1,8 +1,5 @@
 package com.fullCar.FullCar.controller;
-
-import com.fullCar.FullCar.dto.AdIdDTO;
 import com.fullCar.FullCar.dto.ImageResponseDTO;
-import com.fullCar.FullCar.model.Ads;
 import com.fullCar.FullCar.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
