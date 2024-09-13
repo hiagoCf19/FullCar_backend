@@ -16,12 +16,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdsService {
+public class AdsServiceCore implements AdsService {
     private final AdsRepository adsRepository;
     private final AccountService accountService;
-    @Autowired
-    @Lazy
-    private ImageService imageService;
+
 
     public AdIdDTO createAd(AdRequestDTO data){
        var ad= new Ads();
@@ -61,7 +59,7 @@ public class AdsService {
         return adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("The ad you are looking for was not found"));
     }
     private List<ImageResponseDTO> getAllAdImages(Long ad_id){
-        List<Image> images= imageService.getAllAdImagesById(ad_id);
+        List<Image> images= imageServiceCore.getAllAdImagesById(ad_id);
         return images.stream()
                 .map(image -> new ImageResponseDTO(image.getId(), image.getUrl(), image.getAd().getId()))
                 .collect(Collectors.toList());
