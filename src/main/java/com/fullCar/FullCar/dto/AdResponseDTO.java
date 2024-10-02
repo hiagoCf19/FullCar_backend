@@ -10,7 +10,6 @@ public record AdResponseDTO(
         Long id,
         String title,
         String description,
-        List<ImageResponseDTO> images,
         Double user_price,
         String brand,
         String code_fipe,
@@ -26,14 +25,14 @@ public record AdResponseDTO(
         String car_color,
         String type_of_direction,
         String gear_box,
-        BigDecimal engine_power
+        BigDecimal engine_power,
+        List<ImageResponseDTO> images
 ) {
     public AdResponseDTO(Ads ads, List<ImageResponseDTO> images) {
         this(
                 ads.getId(),
                 ads.getTitle(),
                 ads.getDescription(),
-                images,
                 ads.getUser_price(),
                 ads.getBrand(),
                 ads.getCode_fipe(),
@@ -49,7 +48,8 @@ public record AdResponseDTO(
                 ads.getCar_color(),
                 ads.getType_of_direction(),
                 ads.getGear_box(),
-                ads.getEngine_power()
+                ads.getEngine_power(),
+                images
         );
     }
 }
