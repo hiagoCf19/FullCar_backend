@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/integration/aws-s3")
 public class ImageController {
@@ -20,5 +23,10 @@ public class ImageController {
     public ResponseEntity<ImageResponseDTO> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Long ad_id) {
         var eTag = imageService.uploadFile(file, ad_id);
         return ResponseEntity.ok(eTag);
+    }
+    @PostMapping("/upload-multiple")
+    public ResponseEntity<List<ImageResponseDTO>> uploadFiles(@RequestParam("files") List<MultipartFile> files, @RequestParam Long ad_id) {
+        List<ImageResponseDTO> responses = imageService.uploadFiles(files, ad_id);
+        return ResponseEntity.ok(responses);
     }
 }

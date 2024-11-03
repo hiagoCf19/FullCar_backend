@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -48,6 +49,26 @@ public class ImageService {
             logger.error("Error uploading file: {}", file.getOriginalFilename(), e);
             throw new RuntimeException("Error uploading file: " + file.getOriginalFilename(), e);
         }
+    }
+
+    public List<ImageResponseDTO> uploadFiles(List<MultipartFile> files, Long ad_id){
+        List<ImageResponseDTO> responses = new ArrayList<>();
+        for (MultipartFile file : files) {
+            try {
+                String uniqueFileName = generateUniqueFileName(Objects.requireNonNull(file.getOriginalFilename()));
+                String imageUrl = s3Service.sendToBucket(uniqueFileName, file);
+                Ads ad = adsService.getAdById(ad_id);
+                Image image = new Image();
+                image.setAd(ad);
+                image.setUrl(imageUrl);
+                imageRepository.save(image);
+                responses.add(new ImageResponseDTO(image.getId(), imageUrl, image.getAd().getId()));
+            } catch (Exception e) {
+                logger.error("Error uploading file: {}", file.getOriginalFilename(), e);
+                throw new RuntimeException("Error uploading file: " + file.getOriginalFilename(), e);
+            }
+        }
+        return responses;
     }
 
     public List<Image> getAllAdImagesById(Long ad_id){
