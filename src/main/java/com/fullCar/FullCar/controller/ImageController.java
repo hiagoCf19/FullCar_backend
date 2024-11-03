@@ -3,10 +3,7 @@ import com.fullCar.FullCar.dto.ImageResponseDTO;
 import com.fullCar.FullCar.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -24,8 +21,8 @@ public class ImageController {
         var eTag = imageService.uploadFile(file, ad_id);
         return ResponseEntity.ok(eTag);
     }
-    @PostMapping("/upload-multiple")
-    public ResponseEntity<List<ImageResponseDTO>> uploadFiles(@RequestParam("files") List<MultipartFile> files, @RequestParam Long ad_id) {
+    @PostMapping("/upload-multiple/{ad_id}")
+    public ResponseEntity<List<ImageResponseDTO>> uploadFiles(@RequestParam("files") List<MultipartFile> files, @PathVariable Long ad_id) {
         List<ImageResponseDTO> responses = imageService.uploadFiles(files, ad_id);
         return ResponseEntity.ok(responses);
     }
