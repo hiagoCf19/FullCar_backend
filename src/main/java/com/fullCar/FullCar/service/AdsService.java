@@ -2,6 +2,7 @@ package com.fullCar.FullCar.service;
 
 import com.fullCar.FullCar.dto.*;
 import com.fullCar.FullCar.exception.AdsNotFound;
+import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.model.Ads;
 import com.fullCar.FullCar.model.Image;
 import com.fullCar.FullCar.repository.AdsRepository;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class AdsService {
     private final AdsRepository adsRepository;
     private final AccountService accountService;
+
     @Autowired
     @Lazy
     private ImageService imageService;
@@ -49,18 +51,24 @@ public class AdsService {
     }
 
     public AdResponseDTO getAd(Long id){
-        var ad= adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("The ad you are looking for was not found"));
-        return new AdResponseDTO(ad, getAllAdImages(id));
+        var ad = adsRepository.findByIdWithUser(id)
+                .orElseThrow(() -> new AdsNotFound("The ad you are looking for was not found"));
+
+        // Pega o usuário associado ao anúncio
+        Account user = ad.getUser_id();
+
+        // Passa o anúncio, imagens e usuário ao DTO
+        return new AdResponseDTO(ad, getAllAdImages(id), user);
     }
 
     public AdsResponseListDTO getAllAds() {
         List<Ads> allAds = adsRepository.findAll();
-        List<AdResponseDTO> adResponseDTOs = allAds.stream()
-                .map(ad -> new AdResponseDTO(ad, getAllAdImages(ad.getId())))
+        List<AdResponseDTO> adResponseDTOs = allAds
+                .stream()
+                .map(ad -> new AdResponseDTO(ad, getAllAdImages(ad.getId()), ad.getUser_id()))
                 .collect(Collectors.toList());
         return new AdsResponseListDTO(adResponseDTOs);
     }
-
     public Ads getAdById(Long id){
         return adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("The ad you are looking for was not found"));
     }

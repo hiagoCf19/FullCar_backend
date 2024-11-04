@@ -1,5 +1,6 @@
 package com.fullCar.FullCar.dto;
 
+import com.fullCar.FullCar.model.Account;
 import com.fullCar.FullCar.model.Ads;
 
 import java.math.BigDecimal;
@@ -8,6 +9,9 @@ import java.util.List;
 
 public record AdResponseDTO(
         Long id,
+        String user_name,
+        String user_email,
+
         String title,
         String description,
         Double user_price,
@@ -28,9 +32,11 @@ public record AdResponseDTO(
         BigDecimal engine_power,
         List<ImageResponseDTO> images
 ) {
-    public AdResponseDTO(Ads ads, List<ImageResponseDTO> images) {
+    public AdResponseDTO(Ads ads, List<ImageResponseDTO> images, Account user) {
         this(
                 ads.getId(),
+                user.getUser_name(),
+                user.getEmail(),
                 ads.getTitle(),
                 ads.getDescription(),
                 ads.getUser_price(),
