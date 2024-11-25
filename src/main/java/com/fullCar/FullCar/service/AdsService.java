@@ -72,6 +72,16 @@ public class AdsService {
     public Ads getAdById(Long id){
         return adsRepository.findById(id).orElseThrow(()-> new AdsNotFound("The ad you are looking for was not found"));
     }
+    public List<AdByUserIdResponse> getAllAdsByUser(Long userId){
+        var ads= adsRepository.getAdsByUser(userId);
+        return ads.stream()
+                .map(ad -> {
+                    var images= getAllAdImages(ad.getId());
+                    return new AdByUserIdResponse(ad, images);
+                })
+                .toList();
+    }
+
     private List<ImageResponseDTO> getAllAdImages(Long ad_id){
         List<Image> images= imageService.getAllAdImagesById(ad_id);
         return images.stream()

@@ -1,0 +1,1 @@
+ALTER TABLE ads ALTER COLUMN engine_power TYPE VARCHAR(10) USING engine_power::VARCHAR;

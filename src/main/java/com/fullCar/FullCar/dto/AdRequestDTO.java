@@ -18,7 +18,7 @@ public record AdRequestDTO(
          @NotNull
          Long user_id,
          @NotNull
-         Double user_price,
+         BigDecimal user_price,
          @NotNull
          @NotBlank
          String brand,
@@ -32,7 +32,7 @@ public record AdRequestDTO(
          @NotNull
          Integer model_year,
          @NotNull
-         Double fipe_price,
+         BigDecimal fipe_price,
          @NotNull
          String reference_month,
          @NotNull
@@ -48,7 +48,7 @@ public record AdRequestDTO(
          @NotNull
          String gear_box,
          @NotNull
-         BigDecimal engine_power
+         String engine_power
 ) {
     public AdRequestDTO(Ads ads) {
         this(
