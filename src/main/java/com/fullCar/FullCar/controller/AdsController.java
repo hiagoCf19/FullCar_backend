@@ -1,9 +1,7 @@
 package com.fullCar.FullCar.controller;
 
-import com.fullCar.FullCar.dto.AdIdDTO;
-import com.fullCar.FullCar.dto.AdRequestDTO;
-import com.fullCar.FullCar.dto.AdResponseDTO;
-import com.fullCar.FullCar.dto.AdsResponseListDTO;
+import com.fullCar.FullCar.dto.*;
+import com.fullCar.FullCar.model.Ads;
 import com.fullCar.FullCar.service.AdsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ads")
@@ -34,6 +34,11 @@ public class AdsController {
     public ResponseEntity<AdResponseDTO> getAd(@PathVariable Long id){
         var ad= adsService.getAd(id);
         return ResponseEntity.ok().body(ad);
+    }
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<AdByUserIdResponse>> getAdByUser(@PathVariable Long userId){
+        var ads= adsService.getAllAdsByUser(userId);
+        return ResponseEntity.ok().body(ads);
     }
 
 

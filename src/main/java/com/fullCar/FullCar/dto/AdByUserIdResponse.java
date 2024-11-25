@@ -7,10 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record AdResponseDTO(
+public record AdByUserIdResponse(
         Long id,
-        String user_name,
-        String user_email,
         String title,
         String description,
         BigDecimal user_price,
@@ -31,11 +29,9 @@ public record AdResponseDTO(
         String engine_power,
         List<ImageResponseDTO> images
 ) {
-    public AdResponseDTO(Ads ads, List<ImageResponseDTO> images, Account user) {
+    public AdByUserIdResponse(Ads ads, List<ImageResponseDTO> images) {
         this(
                 ads.getId(),
-                user.getUser_name(),
-                user.getEmail(),
                 ads.getTitle(),
                 ads.getDescription(),
                 ads.getUser_price(),

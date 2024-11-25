@@ -24,13 +24,13 @@ public class Ads {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Account user_id;
-    private Double user_price;
+    private BigDecimal user_price;
     private String brand;
     private String code_fipe;
     private String fuel;
     private String model;
     private Integer model_year;
-    private Double fipe_price;
+    private BigDecimal fipe_price;
     private String reference_month;
     private LocalDateTime created_at;
     private BigDecimal kilometers_driven;
@@ -39,5 +39,5 @@ public class Ads {
     private String car_color;
     private String type_of_direction;
     private String gear_box;
-    private BigDecimal engine_power;
+    private String engine_power;
 }
