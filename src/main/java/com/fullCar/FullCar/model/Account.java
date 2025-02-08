@@ -28,8 +28,13 @@ public class Account implements UserDetails {
     private String user_name;
     private String password;
     private LocalDateTime created_at;
+    private String phone;
+    private Long cep;
+    private String street;
+    private String neighborhood;
+    private String city;
+    private String uf;
     private Boolean is_confirmed;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
