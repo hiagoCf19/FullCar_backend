@@ -37,6 +37,11 @@ public class AccountService {
         createdAccount.setUser_name(data.user_name());
         createdAccount.setPassword(password);
         createdAccount.setCreated_at(LocalDateTime.now());
+        createdAccount.setPhone(data.phone());
+        createdAccount.setCep(data.cep());
+        createdAccount.setCity(data.city());
+        createdAccount.setUf(data.uf());
+        createdAccount.setNeighborhood(data.neighborhood());
         createdAccount.setIs_confirmed(false);
         accountRepository.save(createdAccount);
         triggerConfirmationEmail(data.email(), createdAccount);
@@ -78,11 +83,10 @@ public class AccountService {
           }
     }
     private String template(Account account){
-        String baseUrl = "http://localhost:8080/account/";
+        String baseUrl = "https://fullcar-backend.onrender.com/account/";
         String endpoint = "/confirm";
         String url= baseUrl+ account.getId() + endpoint;
-        return String.format("""
-                 
+        return String.format("""            
                  Olá %s,
                  
                  Bem-vindo à FullCar!

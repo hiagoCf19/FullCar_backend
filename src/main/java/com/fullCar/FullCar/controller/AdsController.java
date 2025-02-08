@@ -3,9 +3,12 @@ package com.fullCar.FullCar.controller;
 import com.fullCar.FullCar.dto.*;
 import com.fullCar.FullCar.model.Ads;
 import com.fullCar.FullCar.service.AdsService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +21,8 @@ import java.util.List;
 public class AdsController {
 
     private  final AdsService adsService;
+    @PreAuthorize("isAuthenticated()") // Apenas usuários autenticados podem acessar
+    @SecurityRequirement(name = "BearerAuth")
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<AdIdDTO> registerAd(@RequestBody @Valid AdRequestDTO data, UriComponentsBuilder uriComponentsBuilder){

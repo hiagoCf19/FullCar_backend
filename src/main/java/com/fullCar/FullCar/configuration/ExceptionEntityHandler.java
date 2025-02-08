@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.util.stream.Collectors;
+
 @RestControllerAdvice
 public class ExceptionEntityHandler {
     @ExceptionHandler(AccountNotFound.class)
@@ -29,9 +31,13 @@ public class ExceptionEntityHandler {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorDTO(e.getMessage()));
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity handleBadRequest(MethodArgumentNotValidException exception){
-        var errors= exception.getFieldErrors();
-        return ResponseEntity.badRequest().body(errors.stream().map(BeanValidationErrorDTO::new));
+    public ResponseEntity<Object> handleBadRequest(MethodArgumentNotValidException exception) {
+        // Mapeando os erros de campo para uma lista de erros mais informativa
+        var errors = exception.getBindingResult().getFieldErrors().stream()
+                .map(error -> new BeanValidationErrorDTO(error.getField(), error.getDefaultMessage()))
+                .collect(Collectors.toList());
+        // Retornando os erros no corpo da resposta com status 400
+        return ResponseEntity.badRequest().body(errors);
     }
     @ExceptionHandler(AccountAlreadyExistException.class)
     public ResponseEntity<ErrorDTO> handleAccountAlreadyExist (AccountAlreadyExistException e){
